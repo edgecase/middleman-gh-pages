@@ -5,12 +5,12 @@ require 'middleman-gh-pages/version'
 
 Gem::Specification.new do |gem|
   gem.name          = "middleman-gh-pages"
-  gem.version       = Middleman::Gh::Pages::VERSION
+  gem.version       = Middleman::GithubPages::VERSION
   gem.authors       = ["Adam McCrea"]
   gem.email         = ["adam@adamlogic.com"]
-  gem.description   = %q{TODO: Write a gem description}
-  gem.summary       = %q{TODO: Write a gem summary}
-  gem.homepage      = ""
+  gem.description   = %q{Easy deployment of Middleman sites to Github Pages}
+  gem.summary       = %q{Easy deployment of Middleman sites to Github Pages}
+  gem.homepage      = "http://github.com/newcontext/middleman-gh-pages"
 
   gem.files         = `git ls-files`.split($/)
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
