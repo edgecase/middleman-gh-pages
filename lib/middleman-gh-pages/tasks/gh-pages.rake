@@ -38,7 +38,10 @@ end
 
 # Prevent accidental publishing before committing changes
 task :not_dirty do
-  fail "Directory not clean" if /nothing to commit/ !~ `git status`
+  puts "***#{ENV['ALLOW_DIRTY']}***"
+  unless ENV['ALLOW_DIRTY']
+    fail "Directory not clean" if /nothing to commit/ !~ `git status`
+  end
 end
 
 desc "Compile all files into the build directory"

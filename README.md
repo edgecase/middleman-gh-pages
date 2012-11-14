@@ -32,7 +32,12 @@ The only assumption is that you are deploying to a gh-pages branch in the same
 remote as the source. `rake publish` will create this branch for you if it 
 doesn't exist.
 
-Note that you cannot deploy your site if you have uncommitted changes.
+Note that you cannot deploy your site if you have uncommitted changes. You can
+override this with the `ALLOW_DIRTY` option:
+
+```shell
+bundle exec rake publish ALLOW_DIRTY=true
+```
 
 ## Contributing
 
