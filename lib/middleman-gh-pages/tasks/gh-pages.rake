@@ -1,12 +1,17 @@
 require 'fileutils'
 
-BUILD_DIR = File.join(File.dirname(__FILE__), "build")
+PROJECT_ROOT = `git rev-parse --show-toplevel`.strip
+BUILD_DIR    = File.join(PROJECT_ROOT, "build")
 GH_PAGES_REF = File.join(BUILD_DIR, ".git/refs/remotes/origin/gh-pages")
 
 directory BUILD_DIR
 
 file GH_PAGES_REF => BUILD_DIR do
-  repo_url = `git config --get remote.origin.url`.strip
+  repo_url = nil
+
+  cd PROJECT_ROOT do
+    repo_url = `git config --get remote.origin.url`.strip
+  end
 
   cd BUILD_DIR do
     sh "git init"
@@ -46,13 +51,19 @@ end
 
 desc "Compile all files into the build directory"
 task :build do
-  sh "bundle exec middleman build --clean"
+  cd PROJECT_ROOT do
+    sh "bundle exec middleman build --clean"
+  end
 end
 
 desc "Build and publish to Github Pages"
 task :publish => [:not_dirty, :prepare_git_remote_in_build_dir, :sync, :build] do
-  head = `git log --pretty="%h" -n1`.strip
-  message = "Site updated to #{head}"
+  message = nil
+
+  cd PROJECT_ROOT do
+    head = `git log --pretty="%h" -n1`.strip
+    message = "Site updated to #{head}"
+  end
 
   cd BUILD_DIR do
     sh 'git add --all'
