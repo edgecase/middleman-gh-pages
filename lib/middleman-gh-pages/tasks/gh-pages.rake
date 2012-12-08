@@ -17,6 +17,7 @@ file GH_PAGES_REF => BUILD_DIR do
     sh "git init"
     sh "git remote add origin #{repo_url}"
     sh "git fetch origin"
+    sh "git checkout master"
 
     if `git branch -r` =~ /gh-pages/
       sh "git checkout gh-pages"
