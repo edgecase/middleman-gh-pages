@@ -2,6 +2,7 @@ require 'fileutils'
 
 PROJECT_ROOT = `git rev-parse --show-toplevel`.strip
 BUILD_DIR    = File.join(PROJECT_ROOT, "build")
+CNAME_FILE   = 'CNAME'
 GH_PAGES_REF = File.join(BUILD_DIR, ".git/refs/remotes/origin/gh-pages")
 
 directory BUILD_DIR
@@ -54,6 +55,7 @@ desc "Compile all files into the build directory"
 task :build do
   cd PROJECT_ROOT do
     sh "bundle exec middleman build --clean"
+    cp(CNAME_FILE, File.join(BUILD_DIR, CNAME_FILE)) if File.exist?(CNAME_FILE)
   end
 end
 
