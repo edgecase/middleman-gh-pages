@@ -39,6 +39,12 @@ override this with the `ALLOW_DIRTY` option:
 bundle exec rake publish ALLOW_DIRTY=true
 ```
 
+## Custom Domain
+
+To set up a custom domain, you can follow the [GitHub help page](https://help.github.com/articles/setting-up-a-custom-domain-with-pages).
+
+__NOTE__ You will need to put your CNAME file in the `source` directory of your middleman project, NOT in its root directory. This will result in the CNAME file being in the root of the generated static site in your gh-pages branch.
+
 ## Contributing
 
 1. Fork it
