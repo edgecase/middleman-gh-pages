@@ -45,6 +45,15 @@ To set up a custom domain, you can follow the [GitHub help page](https://help.gi
 
 __NOTE__ You will need to put your CNAME file in the `source` directory of your middleman project, NOT in its root directory. This will result in the CNAME file being in the root of the generated static site in your gh-pages branch.
 
+## Project Page Path Issues
+
+Since project pages deploy to a subdirectory, assets and page paths are relative to the organization or user that owns the repo. If you're treating the project pages as a standalone site, you can tell Middleman to generate relative paths for assets and links with these settings in the build configuration in `config.rb`
+
+    activate :relative_assets
+    set :relative_links, true
+
+__NOTE__ This only affects sites being accessed at the `username.github.io/projectname` URL, not when accessed at a custom CNAME.
+
 ## Contributing
 
 1. Fork it
