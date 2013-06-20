@@ -52,6 +52,8 @@ Since project pages deploy to a subdirectory, assets and page paths are relative
     activate :relative_assets
     set :relative_links, true
 
+__NOTE__ This only affects sites being accessed at the `username.github.io/projectname` URL, not when accessed at a custom CNAME.
+
 ## Contributing
 
 1. Fork it
