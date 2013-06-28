@@ -100,7 +100,7 @@ task :publish => [:not_dirty] do
     end
   else
     Rake::Task['get_project_repo_url'].invoke
-    Rake::Task['prepage_git_remote_in_build_dir'].invoke
+    Rake::Task['prepare_git_remote_in_build_dir'].invoke
     Rake::Task['sync'].invoke('gh-pages')
     Rake::Task['build'].invoke
 
