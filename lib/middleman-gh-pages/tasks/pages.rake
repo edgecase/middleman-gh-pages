@@ -3,8 +3,8 @@ require 'fileutils'
 CURRENT_BRANCH = `git rev-parse --abbrev-ref HEAD`.strip
 PROJECT_ROOT   = `git rev-parse --show-toplevel`.strip
 
-REPO_NAME      = ""
-REPO_URL       = ""
+REPO_NAME      = nil
+REPO_URL       = nil
 
 BUILD_DIR      = File.join(PROJECT_ROOT, "build")
 GH_PAGES_REF   = File.join(BUILD_DIR, ".git/refs/remotes/origin/gh-pages")
@@ -44,7 +44,20 @@ end
 file USER_PAGES_REF => BUILD_DIR do
 
   cd BUILD_DIR do
+    sh "git init"
+    sh "git remote add origin #{REPO_URL}"
+    sh "git fetch origin"
+    sh "git checkout #{CURRENT_BRANCH}"
 
+    if `git branch -r` =~ /master/
+      sh "git checkout master"
+    else
+      sh "git checkout --orphan master"
+      sh "touch index.html"
+      sh "git add ."
+      sh "git commit -m 'initial user_page commit'"
+      sh "git push --force origin master"
+    end
   end
 end
 
@@ -76,6 +89,25 @@ task :build do
   end
 end
 
+desc "Commit and push the build onto the correct branch"
+task :commit_and_push_build do
+
+  cd PROJECT_ROOT do
+    head = `git log --pretty="%h" -n1`.strip
+    message = "Site updated to #{head}"
+  end
+
+  cd BUILD_DIR do
+    sh 'git add --all'
+    if /nothing to commit/ =~ `git status`
+      puts "No changes to commit."
+    else
+      sh "git commit -m \"#{message}\""
+    end
+    is_user_page? ? sh("git push --force origin master") : sh("git push origin gh-pages")
+  end
+end
+
 desc "Build and publish to Github Pages"
 task :publish => [:not_dirty] do
   message = nil
@@ -83,41 +115,19 @@ task :publish => [:not_dirty] do
 
   if is_user_page?
     if !on_master_or_gh_branch
-      puts "Error!"
       puts "You are trying to deploy a GitHub user page while on the #{CURRENT_BRANCH} branch.
       Please move to another branch and try again."
     else
-      puts "Ready to deploy to master!"
-      # Rake::Task['prepare_user_pages_git_remote_in_build_dir'].invoke
-      # Rake::Task['sync'].invoke("#{CURRENT_BRANCH}")
-      # Rake::Task['build'].invoke
-
-      # #
-      # # deploy schtuff
-      # #
-
-      # Rake::Task['sync'].invoke('master')
+      Rake::Task['prepare_user_pages_git_remote_in_build_dir'].invoke
+      Rake::Task['sync'].invoke("#{CURRENT_BRANCH}")
+      Rake::Task['build', 'commit_and_push_build'].invoke
+      Rake::Task['sync'].invoke('master')
     end
+
   else
-    Rake::Task['get_project_repo_url'].invoke
     Rake::Task['prepare_git_remote_in_build_dir'].invoke
     Rake::Task['sync'].invoke('gh-pages')
-    Rake::Task['build'].invoke
-
-    cd PROJECT_ROOT do
-      head = `git log --pretty="%h" -n1`.strip
-      message = "Site updated to #{head}"
-    end
-
-    cd BUILD_DIR do
-      sh 'git add --all'
-      if /nothing to commit/ =~ `git status`
-        puts "No changes to commit."
-      else
-        sh "git commit -m \"#{message}\""
-      end
-      sh "git push origin gh-pages"
-    end
+    Rake::Task['build', 'commit_and_push_build'].invoke
   end
 end
 
