@@ -89,8 +89,8 @@ task :build do
   end
 end
 
-desc "Commit and push the build onto the correct branch"
-task :commit_and_push_build do
+desc "Commit the build and push it to the correct branch"
+task :commit_build_and_push do
 
   cd PROJECT_ROOT do
     head = `git log --pretty="%h" -n1`.strip
@@ -120,14 +120,14 @@ task :publish => [:not_dirty] do
     else
       Rake::Task['prepare_user_pages_git_remote_in_build_dir'].invoke
       Rake::Task['sync'].invoke("#{CURRENT_BRANCH}")
-      Rake::Task['build', 'commit_and_push_build'].invoke
+      Rake::Task['build', 'commit_build_and_push'].invoke
       Rake::Task['sync'].invoke('master')
     end
 
   else
     Rake::Task['prepare_git_remote_in_build_dir'].invoke
     Rake::Task['sync'].invoke('gh-pages')
-    Rake::Task['build', 'commit_and_push_build'].invoke
+    Rake::Task['build', 'commit_build_and_push'].invoke
   end
 end
 
