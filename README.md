@@ -28,9 +28,21 @@ rake build    # Compile all files into the build directory
 rake publish  # Build and publish to Github Pages
 ```
 
-The only assumption is that you are deploying to a gh-pages branch in the same 
-remote as the source. `rake publish` will create this branch for you if it 
-doesn't exist.
+The only assumption is that you are either deploying to a gh-pages branch in the same 
+remote as the source, or you are publishing to a username.github.io(com) page. In which case
+there are more requirements described below.
+
+###User and Organization Pages (username.github.io)
+In this instance you cannot develop on master.  The build of your project has to go there as
+[described by GitHub](https://help.github.com/articles/user-organization-and-project-pages).
+
+If you try to deploy a github.io or .com page on master OR gh-pages 
+the gem won't let you continue.  Once you have moved over to a branch other than master or gh-pages, 
+master will be cleared out, and your site will be published there.
+
+###Project Pages (gh-pages)
+There are no extra requirements in the case of pushing to the gh-pages branch `rake publish` 
+will create this branch for you if it doesn't exist.
 
 Note that you cannot deploy your site if you have uncommitted changes. You can
 override this with the `ALLOW_DIRTY` option:
