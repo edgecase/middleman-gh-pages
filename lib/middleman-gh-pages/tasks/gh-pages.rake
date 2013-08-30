@@ -3,8 +3,8 @@ require 'fileutils'
 CURRENT_BRANCH = `git rev-parse --abbrev-ref HEAD`.strip
 PROJECT_ROOT   = `git rev-parse --show-toplevel`.strip
 
-REPO_NAME      = nil
-REPO_URL       = nil
+REPO_NAME      = ""
+REPO_URL       = ""
 
 BUILD_DIR      = File.join(PROJECT_ROOT, "build")
 GH_PAGES_REF   = File.join(BUILD_DIR, ".git/refs/remotes/origin/gh-pages")
@@ -38,7 +38,6 @@ file USER_PAGES_REF => BUILD_DIR do
     sh "git init"
     sh "git remote add origin #{REPO_URL}"
     sh "git fetch origin"
-    sh "git checkout #{CURRENT_BRANCH}"
 
     if `git branch -r` =~ /master/
       sh "git checkout master"
@@ -61,7 +60,7 @@ task :sync do
   cd BUILD_DIR do
     sh "git fetch origin"
     branch_to_sync = is_user_page? ? "master" : "gh-pages"
-    sh "git reset --hard origin #{branch_to_sync}"
+    sh "git reset --hard origin/#{branch_to_sync}"
   end
 end
 
@@ -121,7 +120,8 @@ task :publish => [:not_dirty, :get_project_repo_url_and_name] do
     Rake::Task['prepare_gh_pages_git_remote_in_build_dir'].invoke
   end
 
-  Rake::Task['sync', 'build'].invoke
+  Rake::Task['sync'].invoke
+  Rake::Task['build'].invoke
 
   cd PROJECT_ROOT do
     head = `git log --pretty="%h" -n1`.strip
