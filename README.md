@@ -10,7 +10,7 @@ that automate the process of deploying a Middleman site to Github Pages.
 Add this line to your Gemfile:
 
 ```ruby
-gem 'middleman-gh-pages'
+gem 'middleman-gh-pages', require: false
 ```
 
 You'll also need to require the gem in your Rakefile:
