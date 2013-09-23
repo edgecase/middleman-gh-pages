@@ -1,5 +1,3 @@
-require "middleman-gh-pages/version"
+require "middleman-gh-pages/core"
 
-if defined?(Rake)
-  Rake.add_rakelib(File.expand_path('../middleman-gh-pages/tasks', __FILE__))
-end
+Middleman::GithubPages.create_tasks

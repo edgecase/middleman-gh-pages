@@ -19,6 +19,16 @@ You'll also need to require the gem in your Rakefile:
 require 'middleman-gh-pages'
 ```
 
+Additionally, you can require `middleman-gh-pages/core` to override the project root, or nest the tasks:
+
+```ruby
+require 'middleman-gh-pages/core'
+
+namespace :docs do
+  Middleman::GithubPages.create_tasks project_root: File.join(File.dirname(__FILE__), "docs")
+end
+```
+
 ## Usage
 
 Middleman Github Pages provides the following rake tasks:
