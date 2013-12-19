@@ -39,6 +39,12 @@ override this with the `ALLOW_DIRTY` option:
 bundle exec rake publish ALLOW_DIRTY=true
 ```
 
+If you want to change the remote that you're deploying to 
+
+```shell
+REMOTE_NAME=upstream bundle exec rake publish
+```
+
 ## Custom Domain
 
 To set up a custom domain, you can follow the [GitHub help page](https://help.github.com/articles/setting-up-a-custom-domain-with-pages).
