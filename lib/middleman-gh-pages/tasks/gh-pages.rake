@@ -1,15 +1,14 @@
 require 'fileutils'
 
+def remote_name
+  ENV.fetch("REMOTE_NAME", "origin")
+end
+
 PROJECT_ROOT = `git rev-parse --show-toplevel`.strip
 BUILD_DIR    = File.join(PROJECT_ROOT, "build")
-REMOTE_NAME  = ENV['REMOTE_NAME'] ? ENV['REMOTE_NAME'] : "origin"
 GH_PAGES_REF = File.join(BUILD_DIR, ".git/refs/remotes/#{REMOTE_NAME}/gh-pages")
 
 directory BUILD_DIR
-
-def remote_name
-  ENV['REMOTE_NAME'] ? ENV['REMOTE_NAME'] : "origin"
-end
 
 file GH_PAGES_REF => BUILD_DIR do
   repo_url = nil
