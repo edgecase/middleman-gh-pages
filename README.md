@@ -28,9 +28,16 @@ rake build    # Compile all files into the build directory
 rake publish  # Build and publish to Github Pages
 ```
 
-The only assumption is that you are deploying to a gh-pages branch in the same 
+By default it is assumed that you are deploying to a gh-pages branch in the same 
 remote as the source. `rake publish` will create this branch for you if it 
 doesn't exist.
+
+If you wish to use custom source or destination branches they can be specified
+with the `SOURCE_BRANCH` and `DESTINATION_BRANCH` options:
+
+```shell
+bundle exec rake publish SOURCE_BRANCH=source DESTINATION_BRANCH=master
+```
 
 Note that you cannot deploy your site if you have uncommitted changes. You can
 override this with the `ALLOW_DIRTY` option:
@@ -38,6 +45,20 @@ override this with the `ALLOW_DIRTY` option:
 ```shell
 bundle exec rake publish ALLOW_DIRTY=true
 ```
+
+## User and Organsiation pages
+
+Unlike Project pages which need deploying to a `gh-pages` branch, User and
+Organisation pages need deploying to the 'master' branch of a repository
+following the naming scheme `username/username.github.io`. You need to specify
+the source / destination branches in this case as follows:
+
+```shell
+bundle exec rake publish SOURCE_BRANCH=your_source_branch DESTINATION_BRANCH=master
+```
+
+To find out more about User and Organisation pages see:
+[User, Organization and Project Pages](https://help.github.com/articles/user-organization-and-project-pages)
 
 ## Custom Domain
 
