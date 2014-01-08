@@ -9,7 +9,7 @@ that automate the process of deploying a Middleman site to Github Pages.
 
 Add this line to your Gemfile:
 
-```shell
+```ruby
 gem 'middleman-gh-pages'
 ```
 
@@ -32,11 +32,19 @@ The only assumption is that you are deploying to a gh-pages branch in the same
 remote as the source. `rake publish` will create this branch for you if it 
 doesn't exist.
 
-Note that you cannot deploy your site if you have uncommitted changes. You can
+## Options
+
+You cannot deploy your site if you have uncommitted changes. You can
 override this with the `ALLOW_DIRTY` option:
 
 ```shell
 bundle exec rake publish ALLOW_DIRTY=true
+```
+
+You can append a custom suffix to commit messages on the build branch:
+
+```shell
+bundle exec rake publish COMMIT_MESSAGE_SUFFIX="--skip-ci"
 ```
 
 ## Custom Domain
