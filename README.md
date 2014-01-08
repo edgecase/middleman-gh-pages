@@ -47,6 +47,12 @@ You can append a custom suffix to commit messages on the build branch:
 bundle exec rake publish COMMIT_MESSAGE_SUFFIX="--skip-ci"
 ```
 
+You can change the remote that you deploy to:
+
+```shell
+bundle exec rake publish REMOTE_NAME=upstream
+```
+
 ## Custom Domain
 
 To set up a custom domain, you can follow the [GitHub help page](https://help.github.com/articles/setting-up-a-custom-domain-with-pages).
