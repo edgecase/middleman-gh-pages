@@ -53,6 +53,14 @@ You can change the remote that you deploy to:
 bundle exec rake publish REMOTE_NAME=upstream
 ```
 
+If your main source lives in a branch other than `master` you can pass
+in a branch name.  After the first deploy you shouldn't need to pass in
+the branch anymore.
+
+```shell
+bundle exec rake publish SOURCE_BRANCH=web
+```
+
 ## Custom Domain
 
 To set up a custom domain, you can follow the [GitHub help page](https://help.github.com/articles/setting-up-a-custom-domain-with-pages).
