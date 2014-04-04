@@ -26,7 +26,7 @@ file GH_PAGES_REF => BUILD_DIR do
       sh "git checkout gh-pages"
     else
       sh "git checkout --orphan gh-pages"
-      FileUtils.touch(File.join(BUILD_DIR, 'index.html')
+      FileUtils.touch(File.join(BUILD_DIR, 'index.html'))
       sh "git add ."
       sh "git commit -m \"initial gh-pages commit\""
       sh "git push #{remote_name} gh-pages"
