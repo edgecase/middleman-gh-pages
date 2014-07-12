@@ -4,8 +4,8 @@ def remote_name
   ENV.fetch("REMOTE_NAME", "origin")
 end
 
-PROJECT_ROOT = `git rev-parse --show-toplevel`.strip
-BUILD_DIR    = File.join(PROJECT_ROOT, "build")
+PROJECT_ROOT ||= `git rev-parse --show-toplevel`.strip
+BUILD_DIR    ||= File.join(PROJECT_ROOT, "build")
 GH_PAGES_REF = File.join(BUILD_DIR, ".git/refs/remotes/#{remote_name}/gh-pages")
 
 directory BUILD_DIR
