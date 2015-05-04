@@ -53,6 +53,12 @@ You can change the remote that you deploy to:
 bundle exec rake publish REMOTE_NAME=upstream
 ```
 
+If you're publishing a personal or organization page, you'll want to use the branch `master` instead of `gh-pages`:
+
+```shell
+bundle exec rake publish BRANCH_NAME=master
+```
+
 ## Custom Domain
 
 To set up a custom domain, you can follow the [GitHub help page](https://help.github.com/articles/setting-up-a-custom-domain-with-pages).

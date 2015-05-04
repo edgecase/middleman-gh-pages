@@ -3,10 +3,13 @@ require 'fileutils'
 def remote_name
   ENV.fetch("REMOTE_NAME", "origin")
 end
+def branch_name
+  ENV.fetch("BRANCH_NAME", "gh-pages")
+end
 
 PROJECT_ROOT = `git rev-parse --show-toplevel`.strip
 BUILD_DIR    = File.join(PROJECT_ROOT, "build")
-GH_PAGES_REF = File.join(BUILD_DIR, ".git/refs/remotes/#{remote_name}/gh-pages")
+GH_PAGES_REF = File.join(BUILD_DIR, ".git/refs/remotes/#{remote_name}/#{branch_name}")
 
 directory BUILD_DIR
 
@@ -22,14 +25,14 @@ file GH_PAGES_REF => BUILD_DIR do
     sh "git remote add #{remote_name} #{repo_url}"
     sh "git fetch #{remote_name}"
 
-    if `git branch -r` =~ /gh-pages/
-      sh "git checkout gh-pages"
+    if `git branch -r` =~ /#{branch_name}/
+      sh "git checkout #{branch_name}"
     else
-      sh "git checkout --orphan gh-pages"
+      sh "git checkout --orphan #{branch_name}"
       sh "touch index.html"
       sh "git add ."
       sh "git commit -m 'initial gh-pages commit'"
-      sh "git push #{remote_name} gh-pages"
+      sh "git push #{remote_name} #{branch_name}"
     end
   end
 end
@@ -41,7 +44,7 @@ task :prepare_git_remote_in_build_dir => GH_PAGES_REF
 task :sync do
   cd BUILD_DIR do
     sh "git fetch #{remote_name}"
-    sh "git reset --hard #{remote_name}/gh-pages"
+    sh "git reset --hard #{remote_name}/#{branch_name}"
   end
 end
 
@@ -77,6 +80,6 @@ task :publish => [:not_dirty, :prepare_git_remote_in_build_dir, :sync, :build] d
     else
       sh "git commit -m \"#{message}\""
     end
-    sh "git push #{remote_name} gh-pages"
+    sh "git push #{remote_name} #{branch_name}"
   end
 end
