@@ -49,7 +49,7 @@ end
 task :not_dirty do
   puts "***#{ENV['ALLOW_DIRTY']}***"
   unless ENV['ALLOW_DIRTY']
-    fail "Directory not clean" if /nothing to commit/ !~ `git status`
+    fail "Directory not clean" unless (`git status --porcelain`).empty?
   end
 end
 
