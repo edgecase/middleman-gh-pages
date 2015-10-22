@@ -10,13 +10,23 @@ that automate the process of deploying a Middleman site to Github Pages.
 Add this line to your Gemfile:
 
 ```ruby
-gem 'middleman-gh-pages'
+gem 'middleman-gh-pages', require: false
 ```
 
 You'll also need to require the gem in your Rakefile:
 
 ```ruby
 require 'middleman-gh-pages'
+```
+
+Additionally, you can require `middleman-gh-pages/core` to override the project root, or nest the tasks:
+
+```ruby
+require 'middleman-gh-pages/core'
+
+namespace :docs do
+  Middleman::GithubPages.create_tasks project_root: File.join(File.dirname(__FILE__), "docs")
+end
 ```
 
 ## Usage
