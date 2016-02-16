@@ -9,7 +9,7 @@ def branch_name
 end
 
 def nothing_to_commit?
-  !!(/nothing to commit/ =~ `git status`)
+  `git status --porcelain`.chomp.empty?
 end
 
 PROJECT_ROOT = `git rev-parse --show-toplevel`.strip
