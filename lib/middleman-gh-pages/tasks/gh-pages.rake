@@ -1,5 +1,5 @@
-require 'fileutils'
-require 'tmpdir'
+require "fileutils"
+require "tmpdir"
 
 def remote_name
   ENV.fetch("REMOTE_NAME", "origin")
@@ -44,7 +44,7 @@ file GH_PAGES_REF => BUILD_DIR do
       sh "git checkout #{branch_name}"
     else
       sh "git checkout --orphan #{branch_name}"
-      FileUtils.touch(File.join(BUILD_DIR, 'index.html'))
+      FileUtils.touch("index.html")
       sh "git add ."
       sh "git commit -m \"initial gh-pages commit\""
       sh "git push #{remote_name} #{branch_name}"
