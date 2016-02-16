@@ -22,8 +22,8 @@ def backup_and_restore(dir, file, &block)
   end
 end
 
-PROJECT_ROOT = `git rev-parse --show-toplevel`.strip
-BUILD_DIR    = File.join(PROJECT_ROOT, "build")
+PROJECT_ROOT = ENV.fetch("PROJECT_ROOT", `git rev-parse --show-toplevel`.chomp)
+BUILD_DIR    = ENV.fetch("BUILD_DIR", File.join(PROJECT_ROOT, "build"))
 GH_PAGES_REF = File.join(BUILD_DIR, ".git/refs/remotes/#{remote_name}/#{branch_name}")
 
 directory BUILD_DIR
