@@ -32,7 +32,7 @@ file GH_PAGES_REF => BUILD_DIR do
   repo_url = nil
 
   cd PROJECT_ROOT do
-    repo_url = `git config --get remote.#{remote_name}.url`.strip
+    repo_url = `git config --get remote.#{remote_name}.url`.chomp
   end
 
   cd BUILD_DIR do
@@ -88,7 +88,7 @@ task :publish => [:not_dirty, :prepare_git_remote_in_build_dir, :sync, :build] d
   suffix = ENV["COMMIT_MESSAGE_SUFFIX"]
 
   cd PROJECT_ROOT do
-    head = `git log --pretty="%h" -n1`.strip
+    head = `git log --pretty="%h" -n1`.chomp
     message = ["Site updated to #{head}", suffix].compact.join("\n\n")
   end
 
