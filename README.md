@@ -1,8 +1,8 @@
 # Middleman Github Pages
 
-[Middleman](http://middlemanapp.com) makes creating static sites a joy, [Github 
-Pages](http://pages.github.com) hosts static sites for free, Middleman Github 
-Pages brings the two together. Middleman Github Pages is just a few rake tasks 
+[Middleman](http://middlemanapp.com) makes creating static sites a joy, [Github
+Pages](http://pages.github.com) hosts static sites for free, Middleman Github
+Pages brings the two together. Middleman Github Pages is just a few rake tasks
 that automate the process of deploying a Middleman site to Github Pages.
 
 ## Installation
@@ -28,8 +28,8 @@ rake build    # Compile all files into the build directory
 rake publish  # Build and publish to Github Pages
 ```
 
-The only assumption is that you are deploying to a gh-pages branch in the same 
-remote as the source. `rake publish` will create this branch for you if it 
+The only assumption is that you are deploying to a gh-pages branch in the same
+remote as the source. `rake publish` will create this branch for you if it
 doesn't exist.
 
 ## Options
@@ -51,6 +51,12 @@ You can change the remote that you deploy to:
 
 ```shell
 bundle exec rake publish REMOTE_NAME=upstream
+```
+
+If you're publishing a personal or organization page, you may want to use the branch `master` instead of `gh-pages`:
+
+```shell
+bundle exec rake publish BRANCH_NAME=master
 ```
 
 ## Custom Domain
