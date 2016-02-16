@@ -1,4 +1,5 @@
 require 'fileutils'
+require 'tmpdir'
 
 def remote_name
   ENV.fetch("REMOTE_NAME", "origin")
@@ -10,6 +11,15 @@ end
 
 def nothing_to_commit?
   `git status --porcelain`.chomp.empty?
+end
+
+def backup_and_restore(dir, file, &block)
+  yield unless File.exist?(File.join(dir, file))
+  Dir.mktmpdir do |tmpdir|
+    mv File.join(dir, file), tmpdir
+    yield
+    mv File.join(tmpdir, file), dir
+  end
 end
 
 PROJECT_ROOT = `git rev-parse --show-toplevel`.strip
@@ -65,8 +75,10 @@ end
 
 desc "Compile all files into the build directory"
 task :build do
-  cd PROJECT_ROOT do
-    sh "bundle exec middleman build --clean"
+  backup_and_restore(BUILD_DIR, ".git") do
+    cd PROJECT_ROOT do
+      sh "bundle exec middleman build --clean"
+    end
   end
 end
 
