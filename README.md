@@ -44,7 +44,7 @@ bundle exec rake publish ALLOW_DIRTY=true
 You can append a custom suffix to commit messages on the build branch:
 
 ```shell
-bundle exec rake publish COMMIT_MESSAGE_SUFFIX="--skip-ci"
+bundle exec rake publish COMMIT_MESSAGE_SUFFIX="[skip-ci]"
 ```
 
 You can change the remote that you deploy to:
