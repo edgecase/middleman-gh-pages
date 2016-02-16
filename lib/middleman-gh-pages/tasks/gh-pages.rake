@@ -4,6 +4,10 @@ def remote_name
   ENV.fetch("REMOTE_NAME", "origin")
 end
 
+def nothing_to_commit?
+  !!(/nothing to commit/ =~ `git status`)
+end
+
 PROJECT_ROOT = `git rev-parse --show-toplevel`.strip
 BUILD_DIR    = File.join(PROJECT_ROOT, "build")
 GH_PAGES_REF = File.join(BUILD_DIR, ".git/refs/remotes/#{remote_name}/gh-pages")
@@ -51,7 +55,7 @@ end
 task :not_dirty do
   puts "***#{ENV['ALLOW_DIRTY']}***"
   unless ENV['ALLOW_DIRTY']
-    fail "Directory not clean" if /nothing to commit/ !~ `git status`
+    fail "Directory not clean" unless nothing_to_commit?
   end
 end
 
@@ -74,7 +78,7 @@ task :publish => [:not_dirty, :prepare_git_remote_in_build_dir, :sync, :build] d
 
   cd BUILD_DIR do
     sh 'git add --all'
-    if /nothing to commit/ =~ `git status`
+    if nothing_to_commit?
       puts "No changes to commit."
     else
       sh "git commit -m \"#{message}\""
