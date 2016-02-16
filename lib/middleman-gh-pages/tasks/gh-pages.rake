@@ -9,8 +9,8 @@ def branch_name
   ENV.fetch("BRANCH_NAME", "gh-pages")
 end
 
-def nothing_to_commit?
-  `git status --porcelain`.chomp.empty?
+def uncommitted_changes?
+  `git status --porcelain`.chomp.length > 0
 end
 
 def backup_and_restore(dir, file, &block)
@@ -65,7 +65,7 @@ end
 
 # Prevent accidental publishing before committing changes
 task :not_dirty do
-  unless nothing_to_commit?
+  if uncommitted_changes?
     puts "*** WARNING: You currently have uncommitted changes. ***"
     fail "Build aborted, because project directory is not clean." unless ENV["ALLOW_DIRTY"]
   end
@@ -91,11 +91,11 @@ task :publish => [:not_dirty, :prepare_git_remote_in_build_dir, :sync, :build] d
   end
 
   cd BUILD_DIR do
-    sh 'git add --all'
-    if nothing_to_commit?
-      puts "No changes to commit."
-    else
+    sh "git add --all"
+    if uncommitted_changes?
       sh "git commit -m \"#{message}\""
+    else
+      puts "No changes to commit."
     end
     sh "git push #{remote_name} #{branch_name}"
   end
