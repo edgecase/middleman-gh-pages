@@ -53,10 +53,10 @@ file GH_PAGES_REF => BUILD_DIR do
 end
 
 # Alias to something meaningful
-task :prepare_git_remote_in_build_dir => GH_PAGES_REF
+task :prepare_build_dir => GH_PAGES_REF
 
 # Fetch upstream changes on gh-pages branch
-task :sync do
+task :sync_build_dir => :prepare_build_dir do
   cd BUILD_DIR do
     sh "git fetch #{remote_name}"
     sh "git reset --hard #{remote_name}/#{branch_name}"
@@ -64,7 +64,7 @@ task :sync do
 end
 
 # Prevent accidental publishing before committing changes
-task :not_dirty do
+task :prevent_dirty_builds do
   if uncommitted_changes?
     puts "*** WARNING: You currently have uncommitted changes. ***"
     fail "Build aborted, because project directory is not clean." unless ENV["ALLOW_DIRTY"]
@@ -81,7 +81,7 @@ task :build do
 end
 
 desc "Build and publish to Github Pages"
-task :publish => [:not_dirty, :prepare_git_remote_in_build_dir, :sync, :build] do
+task :publish => [:prevent_dirty_builds, :sync_build_dir, :build] do
   message = nil
   suffix = ENV["COMMIT_MESSAGE_SUFFIX"]
 
