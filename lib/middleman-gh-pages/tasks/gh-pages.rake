@@ -19,7 +19,9 @@ file GH_PAGES_REF => BUILD_DIR do
 
   cd BUILD_DIR do
     sh "git init"
-    sh "git remote add #{remote_name} #{repo_url}"
+    if !(`git remote`.match(remote_name))
+      sh "git remote add #{remote_name} #{repo_url}"
+    end
     sh "git fetch #{remote_name}"
 
     if `git branch -r` =~ /gh-pages/
