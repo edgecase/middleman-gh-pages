@@ -65,9 +65,9 @@ end
 
 # Prevent accidental publishing before committing changes
 task :not_dirty do
-  puts "***#{ENV['ALLOW_DIRTY']}***"
-  unless ENV['ALLOW_DIRTY']
-    fail "Directory not clean" unless nothing_to_commit?
+  unless nothing_to_commit?
+    puts "*** WARNING: You currently have uncommitted changes. ***"
+    fail "Build aborted, because project directory is not clean." unless ENV["ALLOW_DIRTY"]
   end
 end
 
