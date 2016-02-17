@@ -41,7 +41,7 @@ doesn't exist.
 You cannot deploy your site if you have uncommitted changes, but you can
 override this (default: `nil`):
 
-```shell
+```
 bundle exec rake publish ALLOW_DIRTY=true
 ```
 
@@ -50,7 +50,7 @@ bundle exec rake publish ALLOW_DIRTY=true
 You can append a custom suffix to commit messages on the build branch
 (default: `nil`):
 
-```shell
+```
 bundle exec rake publish COMMIT_MESSAGE_SUFFIX="[skip-ci]"
 ```
 
@@ -58,7 +58,7 @@ bundle exec rake publish COMMIT_MESSAGE_SUFFIX="[skip-ci]"
 
 You can change the remote that you deploy to (default: `origin`):
 
-```shell
+```
 bundle exec rake publish REMOTE_NAME=upstream
 ```
 
@@ -67,7 +67,7 @@ bundle exec rake publish REMOTE_NAME=upstream
 If you're publishing a personal or organization page, you may want to use the
 branch `master` instead of `gh-pages` (default: `gh-pages`):
 
-```shell
+```
 bundle exec rake publish BRANCH_NAME=master
 ```
 
@@ -76,7 +76,7 @@ bundle exec rake publish BRANCH_NAME=master
 If your middleman project isn't at the root of your repository, you will
 likely need to change this (default: _root of git repository_):
 
-```shell
+```
 bundle exec rake publish PROJECT_ROOT=/Users/me/projects/repo/www
 ```
 
@@ -85,7 +85,7 @@ bundle exec rake publish PROJECT_ROOT=/Users/me/projects/repo/www
 If you override the default middlemant `:build_dir` setting, you will likely
 also need to set this variable (default: `<PROJECT_ROOT>/build`):
 
-```shell
+```
 bundle exec rake publish BUILD_DIR=/some/custom/path/to/public
 ```
 
@@ -113,8 +113,10 @@ __NOTE__ You will need to put your CNAME file in the `source` directory of your 
 
 Since project pages deploy to a subdirectory, assets and page paths are relative to the organization or user that owns the repo. If you're treating the project pages as a standalone site, you can tell Middleman to generate relative paths for assets and links with these settings in the build configuration in `config.rb`
 
-    activate :relative_assets
-    set :relative_links, true
+``` ruby
+activate :relative_assets
+set :relative_links, true
+```
 
 __NOTE__ This only affects sites being accessed at the `username.github.io/projectname` URL, not when accessed at a custom CNAME.
 
