@@ -32,31 +32,73 @@ The only assumption is that you are deploying to a gh-pages branch in the same
 remote as the source. `rake publish` will create this branch for you if it
 doesn't exist.
 
-## Options
+## Environment Variable Options
 
-You cannot deploy your site if you have uncommitted changes. You can
-override this with the `ALLOW_DIRTY` option:
+### `ALLOW_DIRTY`
+
+You cannot deploy your site if you have uncommitted changes, but you can
+override this (default: `nil`):
 
 ```shell
 bundle exec rake publish ALLOW_DIRTY=true
 ```
 
-You can append a custom suffix to commit messages on the build branch:
+### `COMMIT_MESSAGE_SUFFIX`
+
+You can append a custom suffix to commit messages on the build branch
+(default: `nil`):
 
 ```shell
 bundle exec rake publish COMMIT_MESSAGE_SUFFIX="[skip-ci]"
 ```
 
-You can change the remote that you deploy to:
+### `REMOTE_NAME`
+
+You can change the remote that you deploy to (default: `origin`):
 
 ```shell
 bundle exec rake publish REMOTE_NAME=upstream
 ```
 
-If you're publishing a personal or organization page, you may want to use the branch `master` instead of `gh-pages`:
+### `BRANCH_NAME`
+
+If you're publishing a personal or organization page, you may want to use the
+branch `master` instead of `gh-pages` (default: `gh-pages`):
 
 ```shell
 bundle exec rake publish BRANCH_NAME=master
+```
+
+### `PROJECT_ROOT`
+
+If your middleman project isn't at the root of your repository, you will
+likely need to change this (default: _root of git repository_):
+
+```shell
+bundle exec rake publish PROJECT_ROOT=/Users/me/projects/repo/www
+```
+
+### `BUILD_DIR`
+
+If you override the default middlemant `:build_dir` setting, you will likely
+also need to set this variable (default: `<PROJECT_ROOT>/build`):
+
+```shell
+bundle exec rake publish BUILD_DIR=/some/custom/path/to/public
+```
+
+### Setting ENV variables from your Rakefile
+
+Of course, for more permanent settings, you can always set these environment
+variables directly in your `Rakefile` instead of from the command line.
+
+```ruby
+require "middleman-gh-pages"
+
+# Ensure builds are skipped when publishing to the gh-pages branch
+ENV["COMMIT_MESSAGE_SUFFIX"] = "[skip ci]"
+# Ignore errors about dirty builds (not recommended)
+ENV["ALLOW_DIRTY"] = "true"
 ```
 
 ## Custom Domain
