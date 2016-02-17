@@ -1,7 +1,9 @@
 # Middleman Github Pages
 
-[Middleman](http://middlemanapp.com) makes creating static sites a joy, [Github
-Pages](http://pages.github.com) hosts static sites for free, Middleman Github
+[![Gem Version](https://img.shields.io/gem/v/middleman-gh-pages.svg)](https://rubygems.org/gems/middleman-gh-pages)
+
+[Middleman](https://middlemanapp.com/) makes creating static sites a joy, [Github
+Pages](https://pages.github.com/) hosts static sites for free, Middleman Github
 Pages brings the two together. Middleman Github Pages is just a few rake tasks
 that automate the process of deploying a Middleman site to Github Pages.
 
@@ -103,7 +105,7 @@ ENV["ALLOW_DIRTY"] = "true"
 
 ## Custom Domain
 
-To set up a custom domain, you can follow the [GitHub help page](https://help.github.com/articles/setting-up-a-custom-domain-with-pages).
+To set up a custom domain, you can follow the [GitHub help page](https://help.github.com/articles/setting-up-a-custom-domain-with-github-pages/).
 
 __NOTE__ You will need to put your CNAME file in the `source` directory of your middleman project, NOT in its root directory. This will result in the CNAME file being in the root of the generated static site in your gh-pages branch.
 
