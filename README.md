@@ -1,6 +1,7 @@
 # Middleman Github Pages
 
 [![Gem Version](https://img.shields.io/gem/v/middleman-gh-pages.svg)](https://rubygems.org/gems/middleman-gh-pages)
+[![Gem Downloads](https://img.shields.io/gem/dt/middleman-gh-pages.svg)](https://rubygems.org/gems/middleman-gh-pages)
 
 [Middleman](https://middlemanapp.com/) makes creating static sites a joy, [Github
 Pages](https://pages.github.com/) hosts static sites for free, Middleman Github
