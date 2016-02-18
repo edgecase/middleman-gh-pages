@@ -14,7 +14,8 @@ def uncommitted_changes?
 end
 
 def backup_and_restore(dir, file, &block)
-  yield unless File.exist?(File.join(dir, file))
+  return yield unless File.exist?(File.join(dir, file))
+
   Dir.mktmpdir do |tmpdir|
     mv File.join(dir, file), tmpdir
     yield
