@@ -39,7 +39,7 @@ file GH_PAGES_REF => BUILD_DIR do
   cd BUILD_DIR do
     sh "git init"
     sh "git remote add #{remote_name} #{repo_url}"
-    sh "git fetch --depth 1 #{remote_name} #{branch_name}"
+    sh "git fetch --depth 1 #{remote_name}"
 
     if `git branch -r` =~ /#{branch_name}/
       sh "git checkout #{branch_name}"
