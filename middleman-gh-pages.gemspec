@@ -10,7 +10,7 @@ Gem::Specification.new do |gem|
   gem.email         = ["adam@adamlogic.com"]
   gem.description   = %q{Easy deployment of Middleman sites to Github Pages}
   gem.summary       = %q{Easy deployment of Middleman sites to Github Pages}
-  gem.homepage      = "http://github.com/newcontext/middleman-gh-pages"
+  gem.homepage      = "https://github.com/edgecase/middleman-gh-pages"
 
   gem.files         = `git ls-files`.split($/)
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
